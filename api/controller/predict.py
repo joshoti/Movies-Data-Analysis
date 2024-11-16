@@ -1,10 +1,10 @@
 from flask import Blueprint, request
 
-from ..services.predict import PredictionService
+from ..services.predict import prediction_service
 
 predict_bp = Blueprint("predict", __name__, url_prefix="/predict")
 
 
 @predict_bp.route("/", methods=["POST"])
 def predict():
-    return PredictionService.answer_question(request.json["prompt"])
+    return prediction_service.answer_question(request.json["prompt"])
