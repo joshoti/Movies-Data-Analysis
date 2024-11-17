@@ -8,10 +8,11 @@ from notebooks.hugging_face_text_gen import hugging_face_text_gen_client  # noqa
 
 
 class InferenceService:
-    pipe: IQATransformerHelper = None
+    client: IQATransformerHelper = None
 
-    def load_default_pipeline(self):
-        self.pipe = google_tapas_client.get_pipeline()
+    def load_default_qa_client(self):
+        self.client = google_tapas_client
+        self.client.get_pipeline()
 
     def use_hugging_face_pipeline(self, query: Union[str, List[str]]):
         """After generating answer from Table-Question-Answering
@@ -19,7 +20,7 @@ class InferenceService:
         to generate human-readable answers.
         """
 
-        raw_answer = self.pipe.use_qa_pipeline(query)
+        raw_answer = self.client.use_qa_pipeline(query)
         # return hugging_face_text_gen_client.generate_human_readable_text(
         #     self.convert_answer_to_message(query, raw_answer)
         # )
