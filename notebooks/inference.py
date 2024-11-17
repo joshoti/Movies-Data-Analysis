@@ -1,8 +1,24 @@
+from transformers import pipeline
+
+from api.services.dbclient import db_client
+from notebooks.google_tapex import google_tapas_client
+
 AutoModelForCausalLM = ...
 AutoTokenizer = ...
 
 
 class InferenceService:
+    pipe = None
+
+    def load_default_pipeline(self):
+        self.pipe = pipeline(model=google_tapas_client.model_name)
+
+    def use_hugging_face_pipeline(self, query):
+        """After generating answer from Tapas transformer, will pass result
+        through text generation transformer to generate human-readable answers.
+        """
+        return self.pipe(query=query, table=db_client.dataframe)["answer"]
+
     def qa_pipeline(self, model_name="fine_tuned_model"):
         model = AutoModelForCausalLM.from_pretrained(model_name)
         tokenizer = AutoTokenizer.from_pretrained(model_name)
