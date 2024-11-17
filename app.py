@@ -1,3 +1,5 @@
+from threading import Thread
+
 from flask import Flask
 
 from api.controller.analysis import analysis_bp
@@ -6,6 +8,7 @@ from api.controller.probe import probe_bp
 from api.extensions.db import db
 from api.services.dbclient import db_client
 from api.utils.config import Config
+from notebooks.inference import inference_service
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -21,5 +24,8 @@ if __name__ == "__main__":
 
     with app.app_context():
         db_client.init_db(csv_path)
+        Thread(target=db_client.load_dataframe()).run()
+
+    Thread(target=inference_service.load_default_pipeline).run()
 
     app.run(debug=True)
