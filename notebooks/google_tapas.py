@@ -12,8 +12,8 @@ class GoogleTapasClient(IQATransformerHelper):
 
     def get_pipeline(self):
         if self.pipe is None:
-            # device = 0 to use GPU. Remove parameter to use CPU
-            self.pipe = pipeline(model=self.model_name, device=0)
+            # device = 0 or "mps" (GPU). Remove parameter, set to -1 or "cpu" to use CPU
+            self.pipe = pipeline(model=self.model_name, device="mps")
         return self.pipe
 
     def use_qa_pipeline(self, query):
