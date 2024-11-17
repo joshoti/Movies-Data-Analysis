@@ -1,4 +1,4 @@
-from typing import Union
+from typing import List, Union
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -11,7 +11,7 @@ class InferenceService:
     def load_default_pipeline(self):
         self.pipe = google_tapas_client.get_pipeline()
 
-    def use_hugging_face_pipeline(self, query: Union[str, list[str]]):
+    def use_hugging_face_pipeline(self, query: Union[str, List[str]]):
         """After generating answer from Tapas transformer, will pass result
         through text generation transformer to generate human-readable answers.
         """
