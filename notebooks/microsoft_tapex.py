@@ -2,13 +2,14 @@ from transformers import BartForConditionalGeneration, TapexTokenizer, pipeline
 
 from api.services.dbclient import db_client
 
-from ..interfaces import TransformerHelperInterface
+from ..interfaces import IQATransformerHelper
 
 
-class MicrosoftTapexClient(TransformerHelperInterface):
+class MicrosoftTapexClient(IQATransformerHelper):
     """For Table Question Answering task"""
 
     model_name = "microsoft/tapex-large-finetuned-wtq"
+    pipe = None
 
     def get_pipeline(self):
         if self.pipe is None:

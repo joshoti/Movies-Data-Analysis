@@ -1,10 +1,10 @@
 from transformers import AutoTokenizer, TapasForQuestionAnswering, pipeline
 
 from api.services.dbclient import db_client
-from interfaces import TransformerHelperInterface
+from interfaces import IQATransformerHelper
 
 
-class GoogleTapasClient(TransformerHelperInterface):
+class GoogleTapasClient(IQATransformerHelper):
     """For Table Question Answering task"""
 
     model_name = "google/tapas-large-finetuned-wtq"
