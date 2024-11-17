@@ -4,6 +4,8 @@ from api.services.dbclient import db_client
 
 
 class GoogleTapasClient:
+    """For Table Question Answering task"""
+
     model_name = "google/tapas-large-finetuned-wtq"
     pipe = None
 

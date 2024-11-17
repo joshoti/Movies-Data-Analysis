@@ -2,7 +2,7 @@ from typing import Union
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from notebooks.google_tapex import google_tapas_client
+from notebooks.google_tapas import google_tapas_client
 
 
 class InferenceService:
