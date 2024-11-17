@@ -21,7 +21,7 @@ class ITextGenTransformerHelper(ABC):
     def get_pipeline(self):
         pass
 
-    def generate_human_readable_text(self, messages: List[Dict[str]]):
+    def generate_human_readable_text(self, messages: List[Dict[str, str]]):
         """
         sample messages
         >>> [{
