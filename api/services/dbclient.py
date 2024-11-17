@@ -5,10 +5,9 @@ from ..extensions.db import db
 
 
 class DatabaseClient:
-    empty_query_result = [{}]
-    db_path = "../instance/movies.db"
     table_name = "Movies"
     numeric_gross_title = "'Gross(Million_Dollars)'"
+    dataframe = None
 
     columns = {
         "title": "Movie_Title",
@@ -66,6 +65,9 @@ class DatabaseClient:
             )
         )
         db.session.commit()
+
+    def load_dataframe(self):
+        self.dataframe = pd.read_sql_table(self.table_name, db.session.connection())
 
     def gross_function(self):
         """
