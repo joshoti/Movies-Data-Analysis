@@ -1,10 +1,7 @@
-from transformers import pipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
 from api.services.dbclient import db_client
 from notebooks.google_tapex import google_tapas_client
-
-AutoModelForCausalLM = ...
-AutoTokenizer = ...
 
 
 class InferenceService:
