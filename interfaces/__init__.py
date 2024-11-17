@@ -1,1 +1,4 @@
-from transformer_helper import TransformerHelperInterface  # noqa: F401
+from transformer_helper import (  # noqa: F401
+    QATransformerHelperInterface,
+    TextGenTransformerHelperInterface,
+)
