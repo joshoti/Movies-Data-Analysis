@@ -1,10 +1,10 @@
-from ..services.inference import inference_service
+from notebooks.inference import inference_service
 
 
 class ProbingService:
     def answer_question(self, prompt: str):
-        probe = inference_service.qa_pipeline()
-        return probe(prompt)
+        answer = inference_service.use_hugging_face_pipeline(prompt)
+        return answer
 
 
 probing_service = ProbingService()
