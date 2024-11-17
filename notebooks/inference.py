@@ -2,20 +2,34 @@ from typing import List, Union
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+from interfaces import IQATransformerHelper
 from notebooks.google_tapas import google_tapas_client
+from notebooks.hugging_face_text_gen import hugging_face_text_gen_client  # noqa: F401
 
 
 class InferenceService:
-    pipe = None
+    pipe: IQATransformerHelper = None
 
     def load_default_pipeline(self):
         self.pipe = google_tapas_client.get_pipeline()
 
     def use_hugging_face_pipeline(self, query: Union[str, List[str]]):
-        """After generating answer from Tapas transformer, will pass result
-        through text generation transformer to generate human-readable answers.
+        """After generating answer from Table-Question-Answering
+        transformer, will pass result through text generation transformer
+        to generate human-readable answers.
         """
-        return self.pipe.use_qa_pipeline(query)
+
+        raw_answer = self.pipe.use_qa_pipeline(query)
+        # return hugging_face_text_gen_client.generate_human_readable_text(
+        #     self.convert_answer_to_message(query, raw_answer)
+        # )
+        return raw_answer
+
+    def convert_answer_to_message(self, query, answer):
+        """Convert answer to message format that transformers are trained with"""
+
+        content = f"Given a question '{query}', and answer '{answer}', generate a human-readable answer"
+        return [{"role": "user", "content": content}]
 
     def use_model_pipeline(self, model_name="fine_tuned_model", use_tuned_model=True):
         if use_tuned_model:
