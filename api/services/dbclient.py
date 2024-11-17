@@ -61,19 +61,36 @@ class DatabaseClient:
     def handle_missing_records(self):
         db.session.execute(
             text(
-                f'UPDATE {self.table_name} SET Total_Gross = "$0.00M" WHERE Total_Gross = "Gross Unkown"'
+                f'UPDATE {self.table_name} \
+                SET Total_Gross = "$0.00M" \
+                WHERE Total_Gross = "Gross Unkown"'
             )
         )
         db.session.commit()
 
     def load_dataframe(self):
-        self.dataframe = pd.read_sql_table(self.table_name, db.session.connection())
+        """Loading all numerical columns as VARCHAR because Transformers don't work with numbers"""
+
+        self.dataframe = pd.read_sql_query(
+            "SELECT \
+                Movie_Title, CAST(Year AS VARCHAR) AS Year, Director, \
+                Actors, CAST(Rating AS VARCHAR) AS Rating, \
+                CAST('Runtime(Mins)' AS VARCHAR) AS 'Runtime(Mins)', \
+                Censor, Total_Gross, main_genre, side_genre \
+            FROM Movies",
+            db.session.connection(),
+        )
 
     def gross_function(self):
+        """The Total_Gross column is in VARCHAR format. This function
+        converts the column to numerical equivalent for comparison
         """
-        The Total_Gross column is in VARCHAR format. This function converts the column to numerical equivalent for comparison
-        """
-        return f', CAST(REPLACE(REPLACE(Total_Gross, "$", ""), "M", "") AS DECIMAL(10, 2)) AS {self.numeric_gross_title}'
+
+        return (
+            ", CAST("
+            "REPLACE(REPLACE(Total_Gross, '$', ''), 'M', '') AS DECIMAL(10, 2)"
+            f") AS {self.numeric_gross_title}"
+        )
 
     def build_query(
         self,
