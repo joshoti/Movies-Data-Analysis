@@ -1,9 +1,10 @@
 from transformers import AutoTokenizer, TapasForQuestionAnswering, pipeline
 
 from api.services.dbclient import db_client
+from interfaces import TransformerHelperInterface
 
 
-class GoogleTapasClient:
+class GoogleTapasClient(TransformerHelperInterface):
     """For Table Question Answering task"""
 
     model_name = "google/tapas-large-finetuned-wtq"
@@ -11,7 +12,7 @@ class GoogleTapasClient:
 
     def get_pipeline(self):
         if self.pipe is None:
-            self.pipe = pipeline(model=google_tapas_client.model_name)
+            self.pipe = pipeline(model=self.model_name)
         return self.pipe
 
     def use_qa_pipeline(self, query):
