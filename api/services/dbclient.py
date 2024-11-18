@@ -69,15 +69,18 @@ class DatabaseClient:
         db.session.commit()
 
     def load_dataframe(self):
-        """Loading all numerical columns as VARCHAR because Transformers don't work with numbers"""
+        """Loading all numerical columns as VARCHAR"""
+
+        if self.dataframe:
+            return
 
         self.dataframe = pd.read_sql_query(
-            "SELECT \
+            f"SELECT \
                 Movie_Title, CAST(Year AS VARCHAR) AS Year, Director, \
                 Actors, CAST(Rating AS VARCHAR) AS Rating, \
                 CAST('Runtime(Mins)' AS VARCHAR) AS 'Runtime(Mins)', \
                 Censor, Total_Gross, main_genre, side_genre \
-            FROM Movies",
+            FROM {self.table_name}",
             db.session.connection(),
         )
 

@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     with app.app_context():
         db_client.init_db(csv_path)
-        Thread(target=db_client.load_dataframe()).run()
+        Thread(target=db_client.load_dataframe).run()
 
     Thread(target=inference_service.load_default_qa_client).run()
 
