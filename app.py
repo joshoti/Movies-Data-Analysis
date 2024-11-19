@@ -2,9 +2,9 @@ from threading import Thread
 
 from flask import Flask
 
-from api.controller.analysis import analysis_bp
-from api.controller.predict import predict_bp
-from api.controller.probe import probe_bp
+from api.controllers.analysis import analysis_bp
+from api.controllers.predict import predict_bp
+from api.controllers.probe import probe_bp
 from api.extensions.db import db
 from api.services.dbclient import db_client
 from api.utils.config import Config
