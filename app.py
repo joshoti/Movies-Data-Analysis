@@ -3,6 +3,7 @@ from threading import Thread
 from flask import Flask
 
 from api.controllers.analysis import analysis_bp
+from api.controllers.query import query_bp
 from api.controllers.predict import predict_bp
 from api.controllers.probe import probe_bp
 from api.extensions.db import db
@@ -19,6 +20,7 @@ if __name__ == "__main__":
     csv_path = "./data/external/MoviesDataset.csv"
 
     app.register_blueprint(analysis_bp)
+    app.register_blueprint(query_bp)
     app.register_blueprint(probe_bp)
     app.register_blueprint(predict_bp)
 

@@ -18,4 +18,4 @@ class QueryService:
         return db_client.query_db(query)
 
 
-analysis_service = QueryService()
+query_service = QueryService()
