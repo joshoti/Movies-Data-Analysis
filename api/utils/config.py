@@ -1,5 +1,10 @@
 import os
 
+from flask import Flask
+from flask_cors import CORS
+
+from api.extensions.db import db
+
 
 class Config:
     DEBUG = True
@@ -14,3 +19,16 @@ class Config:
     # Fallback to CPU to avoid NotImplementedError
     # for the 'aten::scatter_reduce.two_out' operator
     os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
+
+
+def create_flask_app(name: str):
+    app = Flask(name)
+
+    # Configure app
+    app.config.from_object(Config)
+
+    # Register extensions
+    db.init_app(app)
+    CORS(app, origins=["http://localhost:3000"])
+
+    return app

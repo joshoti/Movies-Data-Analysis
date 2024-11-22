@@ -1,19 +1,14 @@
 from threading import Thread
 
-from flask import Flask
-
 from api.controllers.analysis import analysis_bp
-from api.controllers.query import query_bp
 from api.controllers.predict import predict_bp
 from api.controllers.probe import probe_bp
-from api.extensions.db import db
+from api.controllers.query import query_bp
 from api.services.dbclient import db_client
-from api.utils.config import Config
+from api.utils.config import create_flask_app
 from notebooks.inference import inference_service
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db.init_app(app)
+app = create_flask_app(__name__)
 
 
 if __name__ == "__main__":
