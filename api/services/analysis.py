@@ -1,10 +1,11 @@
 from collections import defaultdict
+from typing import Union
 
 from api.services.dbclient import db_client
 
 
 class AnalysisService:
-    def get_data(self, query_params: dict) -> list:
+    def get_data(self, query_params: dict) -> Union[list, dict]:
         where_clause = db_client.build_where_clause(query_params["query"])
 
         if not query_params:
@@ -58,7 +59,7 @@ class AnalysisService:
         chart_info["data"] = result
         return chart_info
 
-    def get_example_two(self):
+    def get_example_two(self) -> list:
         """Rating by Runtime"""
 
         chart_info = []
@@ -84,8 +85,38 @@ class AnalysisService:
 
         return chart_info
 
-    def get_example_three(self):
-        pass
+    def get_example_three(self) -> dict:
+        """Movies Count by Year"""
+
+        chart_info = {"min_gross": 10, "max_gross": 98_000}
+        result = []
+
+        year_gross = defaultdict(float)
+        year_counter = defaultdict(int)
+
+        for index in range(len(db_client.dataframe)):
+            row = db_client.dataframe.iloc[index]
+            gross, year = row.Total_Gross, int(row.Year)
+
+            # preprocessing to convert to decimal
+            gross = float(gross.removeprefix("$").removesuffix("M"))
+            year = (year // 10) * 10
+
+            year_counter[year] += 1
+            year_gross[year] += gross
+
+        for year in sorted(year_counter):
+            count = year_counter[year]
+
+            year_data = {}
+            year_data["year"] = year
+            year_data["count"] = count
+            year_data["total_gross"] = round(year_gross[year], 2)
+
+            result.append(year_data)
+
+        chart_info["data"] = result
+        return chart_info
 
     def get_example_four(self):
         pass
