@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from api.services.dbclient import db_client
 
 
@@ -29,7 +31,7 @@ class AnalysisService:
         return sample_mapping[example_id]()
 
     def get_example_one(self):
-        """Movies By Genre Count"""
+        """Movies Count By Genre"""
 
         chart_info = {"min_rating": 0, "max_rating": 10}
         result = []
@@ -49,7 +51,7 @@ class AnalysisService:
                     )
                 )
                 / genre_data["count"],
-                2,
+                1,
             )
             result.append(genre_data)
 
@@ -57,7 +59,30 @@ class AnalysisService:
         return chart_info
 
     def get_example_two(self):
-        pass
+        """Rating by Runtime"""
+
+        chart_info = []
+        runtime_rating = defaultdict(float)
+        runtime_counter = defaultdict(int)
+
+        for index in range(len(db_client.dataframe)):
+            row = db_client.dataframe.iloc[index]
+            rating, runtime = float(row.Rating), float(row.Runtime)
+
+            runtime = (runtime // 10) * 10
+            runtime_counter[runtime] += 1
+            runtime_rating[runtime] += rating
+
+        for runtime in sorted(runtime_counter):
+            count = runtime_counter[runtime]
+
+            runtime_data = {}
+            runtime_data["runtime"] = runtime
+            runtime_data["rating"] = round(runtime_rating[runtime] / count, 1)
+
+            chart_info.append(runtime_data)
+
+        return chart_info
 
     def get_example_three(self):
         pass
@@ -70,9 +95,31 @@ class AnalysisService:
 
     def get_example_six(self):
         [
-            "UA", "U", "A", "Not Rated", "R", "18", "UA 16+", "PG", "PG-13",
-            "U/A","7","16","(Banned)","13","12+","UA 13+","15+","12","All",
-            "Unrated", "G", "UA 7+", "M/PG", "18+", "NC-17",
+            "UA",
+            "U",
+            "A",
+            "Not Rated",
+            "R",
+            "18",
+            "UA 16+",
+            "PG",
+            "PG-13",
+            "U/A",
+            "7",
+            "16",
+            "(Banned)",
+            "13",
+            "12+",
+            "UA 13+",
+            "15+",
+            "12",
+            "All",
+            "Unrated",
+            "G",
+            "UA 7+",
+            "M/PG",
+            "18+",
+            "NC-17",
         ]
         """
         1. G, All, PG, M/PG
