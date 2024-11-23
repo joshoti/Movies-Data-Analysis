@@ -75,12 +75,12 @@ class DatabaseClient:
             return
 
         self.dataframe = pd.read_sql_query(
-            f"SELECT \
+            f'SELECT \
                 Movie_Title, CAST(Year AS VARCHAR) AS Year, Director, \
                 Actors, CAST(Rating AS VARCHAR) AS Rating, \
-                CAST('Runtime(Mins)' AS VARCHAR) AS 'Runtime(Mins)', \
+                CAST("Runtime(Mins)" AS VARCHAR) AS Runtime, \
                 Censor, Total_Gross, main_genre, side_genre \
-            FROM {self.table_name}",
+            FROM {self.table_name}',
             db.session.connection(),
         )
 
