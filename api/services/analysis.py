@@ -32,7 +32,7 @@ class AnalysisService:
         return sample_mapping[example_id]()
 
     def get_example_one(self):
-        """Movies Count By Genre"""
+        """Average Rating By Movies Count Vs Genre"""
 
         chart_info = {"min_rating": 0, "max_rating": 10}
         result = []
@@ -86,7 +86,7 @@ class AnalysisService:
         return chart_info
 
     def get_example_three(self) -> dict:
-        """Movies Count by Year"""
+        """Total Gross By Movies Count Vs Year"""
 
         chart_info = {"min_gross": 10, "max_gross": 98_000}
         result = []
@@ -119,7 +119,33 @@ class AnalysisService:
         return chart_info
 
     def get_example_four(self):
-        pass
+        """Gross By Runtime Vs Genre"""
+
+        chart_info = []
+
+        for genre in db_client.dataframe.main_genre.unique():
+            genre_data = {"main_genre": genre}
+            genre_data["runtime"] = sum(
+                map(
+                    float,
+                    db_client.dataframe[
+                        db_client.dataframe.main_genre == genre
+                    ].Runtime,
+                )
+            )
+            # total_gross looks like "$500.20M". The below converts it to 500.2 (type: float)
+            genre_data["total_gross"] = sum(
+                map(
+                    lambda gross: float(gross.removeprefix("$").removesuffix("M")),
+                    db_client.dataframe[
+                        db_client.dataframe.main_genre == genre
+                    ].Total_Gross,
+                )
+            )
+
+            chart_info.append(genre_data)
+
+        return chart_info
 
     def get_example_five(self):
         pass
