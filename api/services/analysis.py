@@ -122,26 +122,26 @@ class AnalysisService:
         """Gross By Runtime Vs Genre"""
 
         chart_info = []
+        genre_runtime = defaultdict(int)
+        genre_gross = defaultdict(float)
 
-        for genre in db_client.dataframe.main_genre.unique():
+        for index in range(len(db_client.dataframe)):
+            row = db_client.dataframe.iloc[index]
+
+            genre, runtime = row.main_genre, int(row.Runtime)
+
+            # preprocessing to convert to decimal
+            gross = float(row.Total_Gross.removeprefix("$").removesuffix("M"))
+
+            genre_runtime[genre] += runtime
+            genre_gross[genre] += gross
+
+        for genre, runtime in genre_runtime.items():
+            gross = genre_gross[genre]
+
             genre_data = {"main_genre": genre}
-            genre_data["runtime"] = sum(
-                map(
-                    float,
-                    db_client.dataframe[
-                        db_client.dataframe.main_genre == genre
-                    ].Runtime,
-                )
-            )
-            # total_gross looks like "$500.20M". The below converts it to 500.2 (type: float)
-            genre_data["total_gross"] = sum(
-                map(
-                    lambda gross: float(gross.removeprefix("$").removesuffix("M")),
-                    db_client.dataframe[
-                        db_client.dataframe.main_genre == genre
-                    ].Total_Gross,
-                )
-            )
+            genre_data["total_gross"] = round(gross, 2)  # Floating-point arithmetic
+            genre_data["runtime"] = runtime
 
             chart_info.append(genre_data)
 
