@@ -34,29 +34,29 @@ class AnalysisService:
     def get_example_one(self):
         """Average Rating By Movies Count Vs Genre"""
 
-        chart_info = {"min_rating": 0, "max_rating": 10}
-        result = []
+        chart_info = {"min_rating": 6, "max_rating": 7.5}
+        genre_data_accumulator = []
+        genre_counter = defaultdict(int)
+        genre_rating = defaultdict(float)
 
-        for genre in db_client.dataframe.main_genre.unique():
+        for index in range(len(db_client.dataframe)):
+            row = db_client.dataframe.iloc[index]
+
+            genre, rating = row.main_genre, float(row.Rating)
+
+            genre_counter[genre] += 1
+            genre_rating[genre] += rating
+
+        for genre, count in genre_counter.items():
+            rating = genre_rating[genre]
+
             genre_data = {"main_genre": genre}
-            genre_data["count"] = len(
-                db_client.dataframe[db_client.dataframe.main_genre == genre]
-            )
-            genre_data["rating"] = round(
-                sum(
-                    map(
-                        float,
-                        db_client.dataframe[
-                            db_client.dataframe.main_genre == genre
-                        ].Rating,
-                    )
-                )
-                / genre_data["count"],
-                1,
-            )
-            result.append(genre_data)
+            genre_data["rating"] = round(rating / count, 1)
+            genre_data["count"] = count
 
-        chart_info["data"] = result
+            genre_data_accumulator.append(genre_data)
+
+        chart_info["data"] = genre_data_accumulator
         return chart_info
 
     def get_example_two(self) -> list:
@@ -88,7 +88,7 @@ class AnalysisService:
     def get_example_three(self) -> dict:
         """Total Gross By Movies Count Vs Year"""
 
-        chart_info = {"min_gross": 10, "max_gross": 98_000}
+        chart_info = {"min_gross": 0, "max_gross": 98_000}
         result = []
 
         year_gross = defaultdict(float)
