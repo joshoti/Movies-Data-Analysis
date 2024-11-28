@@ -27,7 +27,6 @@ class AnalysisService:
             "sample-3": self.get_example_three,
             "sample-4": self.get_example_four,
             "sample-5": self.get_example_five,
-            "sample-6": self.get_example_six,
         }
         return sample_mapping[example_id]()
 
@@ -148,43 +147,62 @@ class AnalysisService:
         return chart_info
 
     def get_example_five(self):
-        pass
+        """Censor Rating Vs Year"""
 
-    def get_example_six(self):
-        [
-            "UA",
-            "U",
-            "A",
-            "Not Rated",
-            "R",
-            "18",
-            "UA 16+",
-            "PG",
-            "PG-13",
-            "U/A",
-            "7",
-            "16",
-            "(Banned)",
-            "13",
-            "12+",
-            "UA 13+",
-            "15+",
-            "12",
-            "All",
-            "Unrated",
-            "G",
-            "UA 7+",
-            "M/PG",
-            "18+",
-            "NC-17",
-        ]
-        """
-        1. G, All, PG, M/PG
-        2. 7, 15, 12, 13, PG-13, U, UA, U/A
-        3 R, NC-17, 18, 18+, 16, UA 16+
-        4. (Banned), Unrated, Not Rated
-        """
-        pass
+        chart_info = []
+        censor_year_count = defaultdict(dict)
+
+        for index in range(len(db_client.dataframe)):
+            row = db_client.dataframe.iloc[index]
+
+            year, censor = int(row.Year), row.Censor
+
+            year = (year // 10) * 10
+            censor = self.censorMapping(censor)
+
+            # dict in dict e.g. {1930: {'pg_movies': 6, 'unrated_movies': 17, 'g_movies': 1}}
+            censor_year_count[year][censor] = 1 + censor_year_count[year].get(censor, 0)
+
+        for year in sorted(censor_year_count):
+            censor_count = censor_year_count[year]
+
+            censor_year_data: dict = censor_count
+            censor_year_data["year"] = year
+
+            chart_info.append(censor_year_data)
+
+        return chart_info
+
+    @staticmethod
+    def censorMapping(censor_rating: str):
+        censor_map = {
+            "G": "g_movies",  # G Movies
+            "All": "g_movies",
+            "PG": "pg_movies",  # PG Movies
+            "PG-13": "pg_movies",
+            "M/PG": "pg_movies",
+            "U/A": "pg_movies",
+            "UA": "pg_movies",
+            "U": "pg_movies",
+            "A": "pg_movies",
+            "7": "pg_movies",
+            "13": "pg_movies",
+            "12+": "pg_movies",
+            "UA 13+": "pg_movies",
+            "15+": "pg_movies",
+            "12": "pg_movies",
+            "UA 7+": "pg_movies",
+            "R": "r_movies",  # R Movies
+            "18": "r_movies",
+            "UA 16+": "r_movies",
+            "16": "r_movies",
+            "NC-17": "r_movies",
+            "18+": "r_movies",
+            "Unrated": "unrated_movies",  # Unrated Movies
+            "(Banned)": "unrated_movies",
+            "Not Rated": "unrated_movies",
+        }
+        return censor_map.get(censor_rating, "unrated_movies")
 
 
 analysis_service = AnalysisService()
