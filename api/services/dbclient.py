@@ -115,19 +115,26 @@ class DatabaseClient:
         ]
         return result
 
-    def build_where_clause(self, query_params: str) -> str:
-        where_clause = []
-        for stmt in query_params.split(","):
-            column, operator, value = stmt.split("-")
+    def build_select(self, columns: str) -> str:
+        select_predicate = []
+        for column in columns.split(","):
+            select_predicate.append(self.columns[column])
+        return ",".join(select_predicate)
 
-            if operator == "like":
+    def build_where_clause(self, query_string: str) -> str:
+        if not query_string:
+            return ""
+
+        where_clause = ""
+        for stmt in query_string.split(","):
+            logic, column, operator, value = stmt.split("-")
+
+            if operator == "LIKE":
                 value = "%" + value + "%"
 
-            where_clause.append(
-                f"{self.columns[column]} {self.operators[operator]} '{value}'"
-            )
+            where_clause += f"{logic} {self.columns[column]} {operator} '{value}' "
 
-        return " AND ".join(where_clause)
+        return where_clause.removeprefix("AND ").removeprefix("OR ")
 
 
 db_client = DatabaseClient()
