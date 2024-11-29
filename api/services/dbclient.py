@@ -20,17 +20,7 @@ class DatabaseClient:
         # "gross": "Total_Gross",
         "main_genre": "main_genre",
         "side_genre": "side_genre",
-        "gross": numeric_gross_title,
-    }
-
-    operators = {
-        "eq": "=",
-        "lt": "<",
-        "le": "<=",
-        "gt": ">",
-        "ge": ">=",
-        "not": "NOT",
-        "like": "LIKE",
+        # "gross": numeric_gross_title,
     }
 
     def init_db(self, file_path: str):
