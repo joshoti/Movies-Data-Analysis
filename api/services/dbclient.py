@@ -17,7 +17,7 @@ class DatabaseClient:
         "rating": "Rating",
         "runtime": '"Runtime(Mins)"',
         "censor": "Censor",
-        # "gross": "Total_Gross",
+        "gross": "Total_Gross",
         "main_genre": "main_genre",
         "side_genre": "side_genre",
         # "gross": numeric_gross_title,
@@ -94,10 +94,12 @@ class DatabaseClient:
         order_by: str = "",
         limit: int = 10,
     ):
-        columns = "*" if not columns else ",".join(columns)
+        columns = "*" if not columns else self.build_select(columns)
         columns += self.gross_function() if include_numerical_gross else ""
 
         table_name = self.table_name
+
+        where_clause = db_client.build_where_clause(where_clause)
 
         query = f"SELECT {columns} "
         query += f"FROM {table_name} "
