@@ -87,12 +87,12 @@ class DatabaseClient:
 
     def build_query(
         self,
-        columns: list[str] = None,
-        include_numerical_gross: bool = True,
+        columns: str = None,
+        include_numerical_gross: bool = False,
         table_name: str = "",
         where_clause: str = "",
         order_by: str = "",
-        limit: int = 10,
+        limit: int = 30,
     ):
         columns = "*" if not columns else self.build_select(columns)
         columns += self.gross_function() if include_numerical_gross else ""
