@@ -15,7 +15,7 @@ class DatabaseClient:
         "director": "Director",
         "actor": "Actors",
         "rating": "Rating",
-        "runtime": "Runtime(Mins)",
+        "runtime": '"Runtime(Mins)"',
         "censor": "Censor",
         # "gross": "Total_Gross",
         "main_genre": "main_genre",
