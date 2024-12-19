@@ -10,7 +10,7 @@ from notebooks.hugging_face_text_gen import hugging_face_text_gen_client  # noqa
 class InferenceService:
     client: IQATransformerHelper = None
 
-    def load_default_qa_client(self):
+    async def load_default_qa_client(self):
         self.client = google_tapas_client
         self.client.get_pipeline()
 

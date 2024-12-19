@@ -1,4 +1,5 @@
-from threading import Thread
+import asyncio
+import time
 
 from api.controllers.analysis import analysis_bp
 from api.controllers.predict import predict_bp
@@ -11,7 +12,7 @@ from notebooks.inference import inference_service
 app = create_flask_app(__name__)
 
 
-if __name__ == "__main__":
+async def main():
     csv_path = "./data/external/MoviesDataset.csv"
 
     app.register_blueprint(analysis_bp)
@@ -21,8 +22,14 @@ if __name__ == "__main__":
 
     with app.app_context():
         db_client.init_db(csv_path)
-        Thread(target=db_client.load_dataframe).run()
+        db_client.load_dataframe()
+        # await asyncio.create_task(db_client.init_db(csv_path))
+        # await asyncio.create_task(db_client.load_dataframe())
 
-    Thread(target=inference_service.load_default_qa_client).run()
+    # inference_service.load_default_qa_client()
+    await asyncio.create_task(inference_service.load_default_qa_client())
+    app.run()
 
-    app.run(debug=True)
+
+if __name__ == "__main__":
+    asyncio.run(main())
