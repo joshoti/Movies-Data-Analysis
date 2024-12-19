@@ -1,15 +1,11 @@
 import asyncio
 import time
 
-from api.controllers.analysis import analysis_bp
-from api.controllers.predict import predict_bp
-from api.controllers.probe import probe_bp
-from api.controllers.query import query_bp
+from api import create_app
 from api.services.dbclient import db_client
-from api.utils.config import create_flask_app
 from notebooks.inference import inference_service
 
-app = create_flask_app(__name__)
+app = create_app()
 
 
 async def main():
