@@ -3,10 +3,10 @@ from unittest.mock import patch
 
 from flask import Flask
 
-from api.query.queryController import query_bp
+from api.query import query_bp
 
 
-class TestQueryEndpoint(unittest.TestCase):
+class TestQueryService(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
         self.app.register_blueprint(query_bp)

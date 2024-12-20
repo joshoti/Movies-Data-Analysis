@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from flask import Flask
 
-from api.predict.predictController import predict_bp
+from api.predict import predict_bp
 
 
 class TestPredictEndpoint(unittest.TestCase):

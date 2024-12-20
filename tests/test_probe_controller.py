@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from flask import Flask
 
-from api.probe.probeController import probe_bp
+from api.probe import probe_bp
 
 
 class TestProbeEndpoint(unittest.TestCase):
