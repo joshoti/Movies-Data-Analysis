@@ -1,25 +1,9 @@
 from collections import defaultdict
-from typing import Union
 
 from api.extensions.db import db_client
 
 
 class AnalysisService:
-    def get_data(self, query_params: dict) -> Union[list, dict]:
-        where_clause = db_client.build_where_clause(query_params["query"])
-
-        if not query_params:
-            default_query = db_client.build_query(
-                order_by=db_client.numeric_gross_title
-            )
-            return db_client.query_db(default_query)
-
-        query = db_client.build_query(
-            where_clause=where_clause, order_by=db_client.numeric_gross_title
-        )
-
-        return db_client.query_db(query)
-
     def get_sample_data(self, example_id: str) -> dict:
         sample_mapping = {
             "sample-1": self.get_example_one,
