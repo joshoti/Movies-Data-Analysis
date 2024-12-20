@@ -10,7 +10,7 @@ def predict():
     """Example endpoint returning a list of colors by palette
     This is using docstrings for specifications.
     ---
-    tags: [Analysis]
+    tags: [Predict]
     parameters:
       - name: palette
         in: path

@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from ..services.probe import probing_service
+from .probeService import probing_service
 
 probe_bp = Blueprint("probe", __name__, url_prefix="/probe")
 
