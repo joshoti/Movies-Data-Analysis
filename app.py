@@ -5,16 +5,13 @@ from api import create_app
 from api.extensions.db import db_client
 from notebooks.inference import inference_service
 
-app = create_app()
+csv_path = "./data/external/MoviesDataset.csv"
 
 
 async def main():
-    csv_path = "./data/external/MoviesDataset.csv"
+    app = create_app()
 
-    app.register_blueprint(analysis_bp)
-    app.register_blueprint(query_bp)
-    app.register_blueprint(probe_bp)
-    app.register_blueprint(predict_bp)
+
 
     with app.app_context():
         db_client.init_db(csv_path)
