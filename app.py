@@ -2,7 +2,7 @@ import asyncio
 import time
 
 from api import create_app
-from api.services.dbclient import db_client
+from api.extensions.db import db_client
 from notebooks.inference import inference_service
 
 app = create_app()

@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import Union
 
-from api.services.dbclient import db_client
+from api.extensions.db import db_client
 
 
 class AnalysisService:

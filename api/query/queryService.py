@@ -1,4 +1,4 @@
-from api.services.dbclient import db_client
+from api.extensions.db import db_client
 
 
 class QueryService:

@@ -1,6 +1,6 @@
 from transformers import BartForConditionalGeneration, TapexTokenizer, pipeline
 
-from api.services.dbclient import db_client
+from api.extensions.db import db_client
 
 from ..interfaces import IQATransformerHelper
 
