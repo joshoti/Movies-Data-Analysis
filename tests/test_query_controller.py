@@ -16,12 +16,16 @@ class TestQueryEndpoint(unittest.TestCase):
 
         self.test_client = test_app.test_client()
 
-    def test_analysis(self):
-        number_of_samples = 5
-        for i in range(1, number_of_samples + 1):
-            response = self.test_client.get(f"/analysis/sample-{i}")
-            self.assertEqual(response.status_code, 200)
-            self.assertIsNotNone(response.json)
+    def test_query(self):
+        response = self.test_client.get("/query")
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.json)
+
+    def test_query_select_one_column(self):
+        response = self.test_client.get("/query?select=title")
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.json)
+        self.assertEqual(len(response.json[0]), 1)
 
 
 if __name__ == "__main__":

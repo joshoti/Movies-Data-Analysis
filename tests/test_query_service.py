@@ -1,23 +1,55 @@
 import unittest
-from unittest.mock import patch
 
-from flask import Flask
-
-from api.query import query_bp
+from api import create_app
+from api.extensions.db import db_client
+from api.query import query_service
+from app import csv_path
+from tests import TestConfig
 
 
 class TestQueryService(unittest.TestCase):
     def setUp(self):
-        self.app = Flask(__name__)
-        self.app.register_blueprint(query_bp)
-        self.client = self.app.test_client()
+        self.test_app = create_app(TestConfig)
 
-    @patch("api.services.query.query_service.get_data")
-    def test_query(self, mock_get_data):
-        mock_get_data.return_value = {"mock_key": "mock_value"}
-        response = self.client.get("/query")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {"mock_key": "mock_value"})
+        with self.test_app.app_context():
+            db_client.init_db(csv_path)
+            db_client.load_dataframe()
+
+    def test_query(self):
+        with self.test_app.app_context():
+            query = {}
+            response: list[dict] = query_service.get_data(query)
+
+        # Many results, each result has complete columns
+        self.assertGreater(len(response), 0)
+        self.assertEqual(len(response[0].keys()), len(db_client.columns))
+
+    def test_query_with_select(self):
+        with self.test_app.app_context():
+            query = {"select": "title"}
+            response: list[dict] = query_service.get_data(query)
+
+        # Many results, each result has one column
+        self.assertGreater(len(response), 0)
+        self.assertEqual(len(response[0].keys()), 1)
+
+    def test_query_with_where(self):
+        with self.test_app.app_context():
+            query = {"where": "AND-title-=-The Shawshank Redemption"}
+            response: list[dict] = query_service.get_data(query)
+
+        # One result, that result has complete columns
+        self.assertEqual(len(response), 1)
+        self.assertEqual(len(response[0].keys()), len(db_client.columns))
+
+    def test_query_with_select_and_where(self):
+        with self.test_app.app_context():
+            query = {"select": "title", "where": "AND-title-=-The Shawshank Redemption"}
+            response: list[dict] = query_service.get_data(query)
+
+        # One result, that result has one column
+        self.assertEqual(len(response), 1)
+        self.assertEqual(len(response[0].keys()), 1)
 
 
 if __name__ == "__main__":
