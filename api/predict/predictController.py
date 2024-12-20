@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from ..services.predict import prediction_service
+from .predictService import prediction_service
 
 predict_bp = Blueprint("predict", __name__, url_prefix="/predict")
 
@@ -10,7 +10,7 @@ def predict():
     """Example endpoint returning a list of colors by palette
     This is using docstrings for specifications.
     ---
-    tags: [Predict]
+    tags: [Analysis]
     parameters:
       - name: palette
         in: path
