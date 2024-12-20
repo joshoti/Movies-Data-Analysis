@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from api.analysis.analysisService import analysis_service
+from .analysisService import analysis_service
 
 analysis_bp = Blueprint("analysis", __name__, url_prefix="/analysis")
 
