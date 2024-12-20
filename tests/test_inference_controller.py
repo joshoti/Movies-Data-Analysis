@@ -3,6 +3,8 @@ import unittest
 from api import create_app
 from api.extensions.db import db_client
 from app import csv_path
+from notebooks.google_tapas import google_tapas_client
+from notebooks.inference import inference_service
 from tests import TestConfig, predict_prompt, probe_prompt
 
 
@@ -13,6 +15,9 @@ class TestInferenceEndpoints(unittest.TestCase):
         with test_app.app_context():
             db_client.init_db(csv_path)
             db_client.load_dataframe()
+
+        inference_service.client = google_tapas_client
+        inference_service.client.get_pipeline()
 
         self.test_client = test_app.test_client()
 

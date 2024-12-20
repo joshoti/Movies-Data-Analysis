@@ -8,7 +8,7 @@ class IQATransformerHelper(ABC):
     def get_pipeline(self):
         pass
 
-    def use_qa_pipeline(self, query: Union[str, List[str]]):
+    def use_qa_pipeline(self, query: Union[str, List[str]]) -> str:
         pass
 
     def use_qa_model(self):
