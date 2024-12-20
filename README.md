@@ -4,3 +4,7 @@ An LLM-augmented backend which can offer basic data analysis, probe the dataset 
 - See React frontend for the visualization [here](https://github.com/joshoti/Movies-Data-Visualization)
 
 - ML [template](https://github.com/datalumina/datalumina-project-template) & API [template](https://github.com/miguelgrinberg/microblog/blob/main/tests.py)
+
+
+## API Documentation
+After starting the application, access the Swagger API documentation at: http://127.0.0.1:5000/apidocs
