@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from api.services.query import query_service
+from .queryService import query_service
 
 query_bp = Blueprint("query", __name__, url_prefix="/query")
 

@@ -19,13 +19,13 @@ def create_app(config_class=Config):
     from api.analysis.analysisController import analysis_bp
     app.register_blueprint(analysis_bp)
 
-    from api.controllers.query import query_bp
+    from api.query.queryController import query_bp
     app.register_blueprint(query_bp)
 
-    from api.controllers.probe import probe_bp
+    from api.probe.probeController import probe_bp
     app.register_blueprint(probe_bp)
 
-    from api.controllers.predict import predict_bp
+    from api.predict.predictController import predict_bp
     app.register_blueprint(predict_bp)
 
     return app
