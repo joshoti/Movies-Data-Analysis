@@ -16,7 +16,7 @@ def create_app(config_class=Config):
     CORS(app, origins=["http://localhost:3000"])
 
     # Register blueprints
-    from api.controllers.analysis import analysis_bp
+    from api.analysis.analysisController import analysis_bp
     app.register_blueprint(analysis_bp)
 
     from api.controllers.query import query_bp
