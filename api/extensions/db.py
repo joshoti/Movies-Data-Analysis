@@ -62,7 +62,7 @@ class DatabaseClient:
     def load_dataframe(self):
         """Loading all numerical columns as VARCHAR"""
 
-        if self.dataframe:
+        if self.dataframe is not None:
             return
 
         self.dataframe = pd.read_sql_query(
