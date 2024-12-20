@@ -1,23 +1,27 @@
 import unittest
-from unittest.mock import patch
 
-from flask import Flask
-
-from api.analysis.analysisController import analysis_bp
+from api import create_app
+from api.extensions.db import db_client
+from app import csv_path
+from tests import TestConfig
 
 
 class TestAnalysisEndpoint(unittest.TestCase):
     def setUp(self):
-        self.app = Flask(__name__)
-        self.app.register_blueprint(analysis_bp)
-        self.client = self.app.test_client()
+        test_app = create_app(TestConfig)
 
-    @patch("api.services.analysis.analysis_service.get_sample_data")
-    def test_analysis(self, mock_get_sample_data):
-        mock_get_sample_data.return_value = {"mock_key": "mock_value"}
-        response = self.client.get("/analysis/sample-1")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {"mock_key": "mock_value"})
+        with test_app.app_context():
+            db_client.init_db(csv_path)
+            db_client.load_dataframe()
+
+        self.test_client = test_app.test_client()
+
+    def test_analysis(self):
+        number_of_samples = 5
+        for i in range(1, number_of_samples + 1):
+            response = self.test_client.get(f"/analysis/sample-{i}")
+            self.assertEqual(response.status_code, 200)
+            self.assertIsNotNone(response.json)
 
 
 if __name__ == "__main__":
