@@ -1,4 +1,4 @@
-from api.utils.config import Config
+from api.config import Config
 
 
 class TestConfig(Config):

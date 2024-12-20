@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
 
+from api.config import Config
 from api.extensions.db import db
 from api.extensions.swagger import swagger
-from api.utils.config import Config
 
 
 def create_app(config_class=Config):
@@ -16,16 +16,16 @@ def create_app(config_class=Config):
     CORS(app, origins=["http://localhost:3000"])
 
     # Register blueprints
-    from api.analysis.analysisController import analysis_bp
+    from api.analysis import analysis_bp
     app.register_blueprint(analysis_bp)
 
-    from api.query.queryController import query_bp
+    from api.query import query_bp
     app.register_blueprint(query_bp)
 
-    from api.probe.probeController import probe_bp
+    from api.probe import probe_bp
     app.register_blueprint(probe_bp)
 
-    from api.predict.predictController import predict_bp
+    from api.predict import predict_bp
     app.register_blueprint(predict_bp)
 
     return app
