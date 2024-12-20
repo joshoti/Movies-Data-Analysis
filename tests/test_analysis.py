@@ -1,15 +1,15 @@
 import unittest
 
 from api import create_app
-from api.analysis.analysisService import analysis_service
+from api.analysis import analysis_service
 from api.extensions.db import db_client
+from app import csv_path
 from tests import TestConfig
 
 
 class TestAnalysisService(unittest.TestCase):
     def setUp(self):
         test_app = create_app(TestConfig)
-        csv_path = "./data/external/MoviesDataset.csv"
 
         with test_app.app_context():
             db_client.init_db(csv_path)
