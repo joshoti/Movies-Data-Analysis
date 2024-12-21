@@ -1,3 +1,5 @@
+from typing import Union
+
 import pandas as pd
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
@@ -136,6 +138,55 @@ class DatabaseClient:
             where_clause += f"{logic} {self.columns[column]} {operator} '{value}' "
 
         return where_clause.removeprefix("AND ").removeprefix("OR ")
+
+    def filter_columns(self, query: Union[str, list[str]] = None):
+        """Filter columns based on query"""
+
+        if query is None or self.dataframe is None:
+            return self.dataframe
+
+        keyword_to_column_mapping = {
+            "title": "Movie_Title",
+            "when": "Year",
+            "year": "Year",
+            "director": "Director",
+            "directors": "Director",
+            "producer": "Director",
+            "producers": "Director",
+            "actor": "Actors",
+            "actors": "Actors",
+            "star": "Actors",
+            "stars": "Actors",
+            "movie star": "Actors",
+            "movie stars": "Actors",
+            "rating": "Rating",
+            "well": "Rating",
+            "perform": "Rating",
+            "runtime": '"Runtime(Mins)"',
+            "time": '"Runtime(Mins)"',
+            "long": '"Runtime(Mins)"',
+            "length": '"Runtime(Mins)"',
+            "censor": "Censor",
+            "viewer": "Censor",
+            "viewers": "Censor",
+            "viewership": "Censor",
+            "earn": "Total_Gross",
+            "much": "Total_Gross",
+            "revenue": "Total_Gross",
+            "gross": "Total_Gross",
+            "genre": "main_genre",
+            "kind": "main_genre",
+        }
+
+        columns_to_keep = set(["Movie_Title"])
+        if isinstance(query, list):
+            query = " ".join(query)
+
+        for word in query.split(" "):
+            word = word.strip().lower()
+            if word in keyword_to_column_mapping:
+                columns_to_keep.add(keyword_to_column_mapping[word])
+        return self.dataframe.filter(items=columns_to_keep)
 
 
 db_client = DatabaseClient()

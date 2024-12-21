@@ -17,7 +17,7 @@ class GoogleTapasClient(IQATransformerHelper):
         return self.pipe
 
     def use_qa_pipeline(self, query):
-        return self.pipe(query=query, table=db_client.dataframe)["answer"]
+        return self.pipe(query=query, table=db_client.filter_columns(query))["answer"]
 
     def use_qa_model(self):
         tokenizer = AutoTokenizer.from_pretrained(self.model_name)

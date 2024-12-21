@@ -1,8 +1,7 @@
 from transformers import BartForConditionalGeneration, TapexTokenizer, pipeline
 
 from api.extensions.db import db_client
-
-from ..interfaces import IQATransformerHelper
+from interfaces import IQATransformerHelper
 
 
 class MicrosoftTapexClient(IQATransformerHelper):
@@ -17,7 +16,7 @@ class MicrosoftTapexClient(IQATransformerHelper):
         return self.pipe
 
     def use_qa_pipeline(self, query):
-        return self.pipe(query=query, table=db_client.dataframe)
+        return self.pipe(query=query, table=db_client.filter_columns(query))
 
     def use_qa_model(self):
         tokenizer = TapexTokenizer.from_pretrained(self.model_name)
