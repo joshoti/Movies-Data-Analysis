@@ -8,12 +8,15 @@ An LLM-augmented backend which can offer basic data analysis, probe the dataset 
 After starting the application, access the Swagger API documentation at: http://127.0.0.1:5000/apidocs
 
 ## Setup
+### Windows
 ```py
-(Windows)
+curl -O https://raw.githubusercontent.com/joshoti/Movies-Data-Analysis/HEAD/boot.bat
 boot.bat
+```
 
-(Unix)
-source boot.sh
+### Unix
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/joshoti/Movies-Data-Analysis/HEAD/boot.sh)"
 ```
 
 
