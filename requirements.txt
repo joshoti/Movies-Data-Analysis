@@ -7,5 +7,6 @@ ipykernel==6.29.5
 numpy==1.26.4
 pandas==2.2.3
 peft==0.13.2
+python-dotenv==1.0.1
 torch==2.5.0
 transformers==4.47.0

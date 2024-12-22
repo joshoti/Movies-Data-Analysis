@@ -1,9 +1,14 @@
+import os
+
+import dotenv
 from flask import Flask
 from flask_cors import CORS
 
 from api.config import Config
 from api.extensions.db import db
 from api.extensions.swagger import swagger, swagger_bp
+
+dotenv.load_dotenv()
 
 
 def create_app(config_class=Config):
@@ -13,7 +18,7 @@ def create_app(config_class=Config):
     # Register extensions
     db.init_app(app)
     swagger.init_app(app)
-    CORS(app, origins=["http://localhost:3000"])
+    CORS(app, origins=os.environ.get("TRUSTED_ORIGINS", ""))
 
     # Register blueprints
     from api.analysis import analysis_bp
