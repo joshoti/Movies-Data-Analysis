@@ -13,6 +13,10 @@ swagger_config = {
             "description": "Local server",
         },
         {
+            "url": "https://movies-data-analysis.onrender.com",
+            "description": "Development server",
+        },
+        {
             "url": "TBA",
             "description": "Production server",
         },
