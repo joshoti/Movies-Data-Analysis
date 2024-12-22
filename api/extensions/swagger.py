@@ -83,3 +83,10 @@ swagger_bp = Blueprint("swagger", __name__, url_prefix="/")
 @swagger_bp.route("", methods=["GET"])
 def default_redirect():
     return redirect("/apidocs")
+
+
+@swagger_bp.route("/test", methods=["GET"])
+def test():
+    import os
+
+    return os.environ.get("TRUSTED_ORIGINS", "").split(",")

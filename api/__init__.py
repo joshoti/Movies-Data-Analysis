@@ -18,7 +18,7 @@ def create_app(config_class=Config):
     # Register extensions
     db.init_app(app)
     swagger.init_app(app)
-    CORS(app, origins=os.environ.get("TRUSTED_ORIGINS", ""))
+    CORS(app, origins=os.environ.get("TRUSTED_ORIGINS", "").split(","))
 
     # Register blueprints
     from api.analysis import analysis_bp
