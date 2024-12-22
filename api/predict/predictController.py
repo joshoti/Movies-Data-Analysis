@@ -7,33 +7,26 @@ predict_bp = Blueprint("predict", __name__, url_prefix="/predict")
 
 @predict_bp.route("", methods=["POST"])
 def predict():
-    """Example endpoint returning a list of colors by palette
-    This is using docstrings for specifications.
+    """Gets prediction for a given prompt
+    Gets prediction for a given prompt
     ---
-    tags: [Predict]
-    parameters:
-      - name: palette
-        in: path
-        type: string
-        enum: ['all', 'rgb', 'cmyk']
-        required: true
-        default: all
-    definitions:
-      Palette:
-        type: object
-        properties:
-          palette_name:
-            type: array
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
+    tags:
+      - Predict
+
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Prompt"
+
     responses:
-      200:
-        description: A list of colors (may be filtered by palette)
-        schema:
-          $ref: '#/definitions/Palette'
-        examples:
-          rgb: ['red', 'green', 'blue']
+      201:
+        description: OK
+        content:
+          text/html:
+            schema:
+              type: string
+            example: "The capital of Nigeria is Abuja."
     """
     return prediction_service.answer_question(request.json["prompt"])
