@@ -18,7 +18,7 @@ boot.bat
 ### 2. Unix (terminal app)
 ```
 curl -O https://raw.githubusercontent.com/joshoti/Movies-Data-Analysis/HEAD/boot.sh
-boot.sh
+source boot.sh
 ```
 
 
