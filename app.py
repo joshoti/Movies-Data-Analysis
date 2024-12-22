@@ -1,11 +1,8 @@
 from threading import Thread
 
 from api import create_app
-from api.extensions.db import db_client
+from api.extensions.db import csv_path, db_client
 from notebooks.inference import inference_service
-
-csv_path = "./data/external/MoviesDataset.csv"
-
 
 if __name__ == "__main__":
     app = create_app()

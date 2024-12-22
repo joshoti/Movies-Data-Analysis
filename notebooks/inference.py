@@ -20,6 +20,9 @@ class InferenceService:
         to generate human-readable answers.
         """
 
+        if self.client is None:
+            self.load_default_qa_client()
+
         raw_answer = self.client.use_qa_pipeline(query)
         # return hugging_face_text_gen_client.generate_human_readable_text(
         #     self.convert_answer_to_message(query, raw_answer)
