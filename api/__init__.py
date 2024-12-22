@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 from api.config import Config
 from api.extensions.db import db
-from api.extensions.swagger import swagger
+from api.extensions.swagger import swagger, swagger_bp
 
 
 def create_app(config_class=Config):
@@ -27,5 +27,7 @@ def create_app(config_class=Config):
 
     from api.predict import predict_bp
     app.register_blueprint(predict_bp)
+
+    app.register_blueprint(swagger_bp)
 
     return app

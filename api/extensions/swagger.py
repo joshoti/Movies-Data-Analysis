@@ -1,4 +1,5 @@
 from flasgger import Swagger
+from flask import Blueprint, redirect
 
 swagger_config = {
     "title": "Movies Dataset OpenAPI Specification",
@@ -70,3 +71,11 @@ swagger_config = {
 }
 
 swagger = Swagger()
+
+
+swagger_bp = Blueprint("swagger", __name__, url_prefix="/")
+
+
+@swagger_bp.route("", methods=["GET"])
+def default_redirect():
+    return redirect("/apidocs")
