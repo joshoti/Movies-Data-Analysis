@@ -1,8 +1,7 @@
 import unittest
 
 from api import create_app
-from api.extensions.db import db_client
-from app import csv_path
+from api.extensions.db import csv_path, db_client
 from notebooks.google_tapas import google_tapas_client
 from notebooks.inference import inference_service
 from tests import TestConfig, predict_prompt, probe_prompt

@@ -1,6 +1,8 @@
+from threading import Thread
 from typing import Union
 
 import pandas as pd
+from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 
@@ -10,7 +12,7 @@ db = SQLAlchemy()
 class DatabaseClient:
     table_name = "Movies"
     numeric_gross_title = "'Gross(Million_Dollars)'"
-    dataframe = None
+    _dataframe: pd.DataFrame = None
 
     columns = {
         "title": "Movie_Title",
@@ -25,6 +27,14 @@ class DatabaseClient:
         "side_genre": "side_genre",
         # "gross": numeric_gross_title,
     }
+
+    @property
+    def dataframe(self):
+        if self._dataframe is None:
+            with current_app.app_context():
+                db_client.init_db(csv_path)
+                Thread(target=db_client.load_dataframe).run()
+        return self._dataframe
 
     def init_db(self, file_path: str):
         self.load_db_in_disk(file_path)
@@ -64,10 +74,10 @@ class DatabaseClient:
     def load_dataframe(self):
         """Loading all numerical columns as VARCHAR"""
 
-        if self.dataframe is not None:
+        if self._dataframe is not None:
             return
 
-        self.dataframe = pd.read_sql_query(
+        self._dataframe = pd.read_sql_query(
             f'SELECT \
                 Movie_Title, CAST(Year AS VARCHAR) AS Year, Director, \
                 Actors, CAST(Rating AS VARCHAR) AS Rating, \
@@ -142,7 +152,7 @@ class DatabaseClient:
     def filter_columns(self, query: Union[str, list[str]] = None):
         """Filter columns based on query"""
 
-        if query is None or self.dataframe is None:
+        if query is None or self._dataframe is None:
             return self.dataframe
 
         keyword_to_column_mapping = {
@@ -190,3 +200,4 @@ class DatabaseClient:
 
 
 db_client = DatabaseClient()
+csv_path = "./data/external/MoviesDataset.csv"
