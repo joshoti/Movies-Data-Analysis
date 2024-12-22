@@ -20,7 +20,7 @@ boot.bat
 ```
 
 ### 2. Unix (terminal app)
-```
+```py
 curl -O https://raw.githubusercontent.com/joshoti/Movies-Data-Analysis/HEAD/boot.sh
 source boot.sh
 ```
