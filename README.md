@@ -17,7 +17,8 @@ boot.bat
 
 ### 2. Unix (terminal app)
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/joshoti/Movies-Data-Analysis/HEAD/boot.sh)"
+curl -O https://raw.githubusercontent.com/joshoti/Movies-Data-Analysis/HEAD/boot.sh
+boot.sh
 ```
 
 
