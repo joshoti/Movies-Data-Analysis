@@ -9,4 +9,4 @@ python3 -m venv venv
 pip install --upgrade pip
 pip install -r requirements.txt
 
-echo "Setup complete. To run app, run 1. 'source venv/bin/activate' 2. 'python app.py' in terminal"
+echo "Setup complete. To run app, run below commands in terminal:\n./venv/Scripts/activate\npython app.py"

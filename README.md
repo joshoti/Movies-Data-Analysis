@@ -8,17 +8,20 @@ An LLM-augmented backend which can offer basic data analysis, probe the dataset 
 After starting the application, access the Swagger API documentation at: http://127.0.0.1:5000/apidocs
 
 ## Setup
-### Windows
+Run below scripts in terminal depending on your OS. On completion, script tells you next step.
+### 1. Windows (cmd app)
 ```py
 curl -O https://raw.githubusercontent.com/joshoti/Movies-Data-Analysis/HEAD/boot.bat
 boot.bat
 ```
 
-### Unix
+### 2. Unix (terminal app)
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/joshoti/Movies-Data-Analysis/HEAD/boot.sh)"
 ```
 
 
 ## References
-- ML [template](https://github.com/datalumina/datalumina-project-template) & API [template](https://github.com/miguelgrinberg/microblog/blob/main/tests.py)
+- ML [template](https://github.com/datalumina/datalumina-project-template)
+- API [template](https://github.com/miguelgrinberg/microblog/blob/main/tests.py)
+- Swagger [docs](https://swagger.io/docs/specification/v3_0/adding-examples/)
