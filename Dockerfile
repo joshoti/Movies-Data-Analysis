@@ -8,5 +8,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 EXPOSE 80
 
-RUN chmod u+x ./entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["flask", "run", "--host=0.0.0.0", "--port=80"]
