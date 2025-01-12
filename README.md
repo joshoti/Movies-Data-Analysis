@@ -28,5 +28,5 @@ source boot.sh
 
 ## References
 - ML [template](https://github.com/datalumina/datalumina-project-template)
-- API [template](https://github.com/miguelgrinberg/microblog/blob/main/tests.py)
+- API [template](https://github.com/miguelgrinberg/microblog)
 - Swagger [docs](https://swagger.io/docs/specification/v3_0/adding-examples/)
