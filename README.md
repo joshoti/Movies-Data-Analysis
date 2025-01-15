@@ -11,7 +11,10 @@ Find the backend's live development link [here](https://movies-data-analysis.onr
 ## API Documentation
 After starting the application, access the Swagger API documentation at: http://127.0.0.1:5000 (local) or https://movies-data-analysis.onrender.com (development)
 
-## Setup
+## Local Environment Setup
+Ensure you have the following installed:
+- [Python >= 3.11](https://www.python.org/downloads/)
+
 Run below scripts in terminal depending on your OS. On completion, script tells you next step.
 ### 1. Windows (cmd app)
 ```py
