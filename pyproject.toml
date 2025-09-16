@@ -5,6 +5,10 @@ description = "My awesome Python project"
 dependencies = [
     "datasets>=2.19.1",
     "fastapi>=0.116.1",
+    "langchain>=0.3.27",
+    "langchain-community>=0.3.29",
+    "ollama>=0.5.4",
+    "python-dotenv>=1.1.1",
     "uvicorn>=0.35.0",
 ]
 
