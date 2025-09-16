@@ -1,0 +1,14 @@
+[project]
+name = "Movies-Data-Analysis"
+version = "0.1.0"
+description = "My awesome Python project"
+dependencies = [
+    "datasets>=2.19.1",
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.1",
+]
