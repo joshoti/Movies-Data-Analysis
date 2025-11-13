@@ -9,7 +9,7 @@ Find the backend's live development link [here](https://movies-data-analysis.onr
 ***Note***: Cold start will delay first request.
 
 ## API Documentation
-After starting the application, access the Swagger API documentation at: http://127.0.0.1:5000 (local) or https://movies-data-analysis.onrender.com (development)
+After starting the application, access the Swagger API documentation at: http://127.0.0.1:8000/docs (local) or https://movies-data-analysis.onrender.com/docs (development)
 
 ## Local Environment Setup
 Ensure you have the following installed:
