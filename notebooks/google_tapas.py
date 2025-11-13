@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, TapasForQuestionAnswering, pipeline
 
-from api.extensions.db import db_client
-from interfaces import IQATransformerHelper
+from api.v1.extensions.db import db_client
+from api.v1.interfaces import IQATransformerHelper
 
 
 class GoogleTapasClient(IQATransformerHelper):
