@@ -1,10 +1,10 @@
 import unittest
 
-from api import create_app
-from api.extensions.db import csv_path, db_client
+from api.v1.app import create_app
+from api.v1.extensions.db import csv_path, db_client
 from notebooks.google_tapas import google_tapas_client
 from notebooks.inference import inference_service
-from tests import TestConfig, predict_prompt, probe_prompt
+from tests.v1 import TestConfig, chat_prompt_1
 
 
 class TestInferenceEndpoints(unittest.TestCase):
@@ -20,16 +20,11 @@ class TestInferenceEndpoints(unittest.TestCase):
 
         self.test_client = test_app.test_client()
 
-    def test_predict(self):
+    def test_chat(self):
         response = self.test_client.post(
-            "/predict",
-            json={"prompt": predict_prompt},
+            "/chat",
+            json={"prompt": chat_prompt_1},
         )
-        self.assertEqual(response.status_code, 200)
-        self.assertIsNotNone(response.json)
-
-    def test_probe(self):
-        response = self.test_client.post("/probe", json={"prompt": probe_prompt})
         self.assertEqual(response.status_code, 200)
         self.assertIsNotNone(response.json)
 

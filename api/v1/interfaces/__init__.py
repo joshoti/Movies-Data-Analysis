@@ -1,4 +1,4 @@
-from interfaces.transformer_helper import (
+from api.v1.interfaces.transformer_helper import (
     IQATransformerHelper,
     ITextGenTransformerHelper,
 )

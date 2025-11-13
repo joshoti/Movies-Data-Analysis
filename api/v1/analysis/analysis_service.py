@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from api.extensions.db import db_client
+from api.v1.extensions.db import db_client
 
 
 class AnalysisService:

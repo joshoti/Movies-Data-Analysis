@@ -1,7 +1,7 @@
 from threading import Thread
 
-from api import create_app
-from api.extensions.db import csv_path, db_client
+from api.v1.app import create_app
+from api.v1.extensions.db import csv_path, db_client
 from notebooks.inference import inference_service
 
 if __name__ == "__main__":

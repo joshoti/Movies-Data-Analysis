@@ -1,8 +1,8 @@
 from flask import Blueprint
 
-from .analysisService import analysis_service
+from .analysis_service import analysis_service
 
-analysis_bp = Blueprint("analysis", __name__, url_prefix="/analysis")
+analysis_bp = Blueprint("analysis", __name__, url_prefix="/v1/analysis")
 
 
 @analysis_bp.route("/<sample_id>", methods=["GET"])
@@ -49,4 +49,11 @@ def analysis(sample_id: str):
             # schema:
             #   $ref: '#/components/schemas/ChartDataObject'
     """
+    if not sample_id.startswith("sample-"):
+        return {
+            "data": [],
+            "max": 0,
+            "min": 0,
+            "error": "Invalid sample ID. Use format 'sample-<number>' where number is 1-5.",
+        }
     return analysis_service.get_sample_data(sample_id)

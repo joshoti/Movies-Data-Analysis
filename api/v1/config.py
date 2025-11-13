@@ -1,6 +1,6 @@
 import os
 
-from api.extensions.swagger import swagger_config
+from api.v1.extensions.swagger import swagger_config
 
 
 class Config:

@@ -1,9 +1,9 @@
 import unittest
 
-from api import create_app
-from api.analysis import analysis_service
-from api.extensions.db import csv_path, db_client
-from tests import TestConfig
+from api.v1.app import create_app
+from api.v1.analysis import analysis_service
+from api.v1.extensions.db import csv_path, db_client
+from tests.v1 import TestConfig
 
 
 class TestAnalysisService(unittest.TestCase):

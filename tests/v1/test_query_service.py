@@ -1,9 +1,9 @@
 import unittest
 
-from api import create_app
-from api.extensions.db import csv_path, db_client
-from api.query import query_service
-from tests import TestConfig
+from api.v1.app import create_app
+from api.v1.extensions.db import csv_path, db_client
+from api.v1.query import query_service
+from tests.v1 import TestConfig
 
 
 class TestQueryService(unittest.TestCase):

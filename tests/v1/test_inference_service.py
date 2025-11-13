@@ -1,13 +1,12 @@
 import time as t
 import unittest
 
-from api import create_app
-from api.extensions.db import csv_path, db_client
-from api.predict import prediction_service
-from api.probe import probing_service
+from api.v1.app import create_app
+from api.v1.extensions.db import csv_path, db_client
+from api.v1.chat import chat_service
 from notebooks.google_tapas import google_tapas_client
 from notebooks.inference import inference_service
-from tests import TestConfig, predict_prompt, probe_prompt
+from tests.v1 import TestConfig, chat_prompt_1, chat_prompt_2
 
 
 class TestInferenceServices(unittest.TestCase):
@@ -23,9 +22,9 @@ class TestInferenceServices(unittest.TestCase):
         inference_service.client = google_tapas_client
         inference_service.client.get_pipeline()
 
-    def test_probe_service(self):
+    def test_chat_service(self):
         start_time = t.time()
-        response = probing_service.answer_question(probe_prompt)
+        response = chat_service.answer_question(chat_prompt_1)
         end_time = t.time()
         self.assertIsNotNone(response)
         self.assertGreater(
@@ -33,9 +32,9 @@ class TestInferenceServices(unittest.TestCase):
         )  # result lists more than 3 items
         self.assertLess(end_time - start_time, self.inference_timeout)
 
-    def test_predict_service(self):
+    def test_chat_service_2(self):
         start_time = t.time()
-        response = prediction_service.answer_question(predict_prompt)
+        response = chat_service.answer_question(chat_prompt_2)
         end_time = t.time()
         self.assertIsNotNone(response)
         self.assertGreater(len(response.split(",")), 1)

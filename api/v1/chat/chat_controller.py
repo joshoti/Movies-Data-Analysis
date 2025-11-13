@@ -1,17 +1,17 @@
 from flask import Blueprint, request
 
-from .predictService import prediction_service
+from .chat_service import chat_service
 
-predict_bp = Blueprint("predict", __name__, url_prefix="/predict")
+chat_bp = Blueprint("chat", __name__, url_prefix="/v1/chat")
 
 
-@predict_bp.route("", methods=["POST"])
-def predict():
-    """Gets prediction for a given prompt
-    Gets prediction for a given prompt
+@chat_bp.route("", methods=["POST"])
+def chat():
+    """Get chat response for a given prompt
+    Get chat response for a given prompt
     ---
     tags:
-      - Predict
+      - Chat
 
     requestBody:
       required: true
@@ -29,4 +29,4 @@ def predict():
               type: string
             example: "The capital of Nigeria is Abuja."
     """
-    return prediction_service.answer_question(request.json["prompt"])
+    return chat_service.answer_question(request.json["prompt"])
