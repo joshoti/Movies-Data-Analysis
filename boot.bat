@@ -8,7 +8,7 @@ uv venv --python 3.12
 ./.venv/Scripts/activate
 
 uv pip install --upgrade pip
-uv sync --no-dev
+uv sync --no-dev --group api-v2-deps
 
 echo -e "\nSetup complete. Running app"
 
