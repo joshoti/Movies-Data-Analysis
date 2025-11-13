@@ -2,7 +2,7 @@ from typing import List, Union
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from interfaces import IQATransformerHelper
+from api.v1.interfaces import IQATransformerHelper
 from notebooks.google_tapas import google_tapas_client
 from notebooks.hugging_face_text_gen import hugging_face_text_gen_client  # noqa: F401
 
