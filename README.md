@@ -13,7 +13,7 @@ After starting the application, access the Swagger API documentation at: http://
 
 ## Local Environment Setup
 Ensure you have the following installed:
-- [Python >= 3.11](https://www.python.org/downloads/)
+- [Python >= 3.12](https://www.python.org/downloads/)
 
 Run below scripts in terminal depending on your OS. On completion, script tells you next step.
 ### 1. Windows (cmd app)

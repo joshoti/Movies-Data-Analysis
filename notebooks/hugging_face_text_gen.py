@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from transformers import pipeline
 
-from interfaces import ITextGenTransformerHelper
+from api.v1.interfaces import ITextGenTransformerHelper
 
 
 class HuggingFaceTextGenerationClient(ITextGenTransformerHelper):

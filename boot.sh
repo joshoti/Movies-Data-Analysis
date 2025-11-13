@@ -4,13 +4,14 @@ git clone https://github.com/joshoti/Movies-Data-Analysis.git
 rm boot.sh
 cd Movies-Data-Analysis
 
-python3 -m venv venv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv venv --python 3.12
 
-source venv/bin/activate
+source .venv/bin/activate
 
-pip install --upgrade pip
-pip install -r requirements.txt
+uv pip install --upgrade pip
+uv sync --no-dev --group api-v2-deps
 
-echo "\nSetup complete. Running app"
+echo -e "\nSetup complete. Running app"
 
-python app.py
+uvicorn main_v2:app --host 0.0.0.0 --port 8000
