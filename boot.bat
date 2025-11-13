@@ -12,4 +12,4 @@ uv sync --no-dev --group api-v2-deps
 
 echo -e "\nSetup complete. Running app"
 
-python app.py
+uvicorn main_v2:app --host 0.0.0.0 --port 8000

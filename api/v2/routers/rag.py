@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from ..models import Prompt
-from ..services.rag_service import rag_service
+from api.v2.models import Prompt
+from api.v2.services.rag_service import rag_service
 
 router = APIRouter()
 
